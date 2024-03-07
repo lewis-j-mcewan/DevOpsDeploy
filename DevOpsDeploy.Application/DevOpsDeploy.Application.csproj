@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DevOpsDeploy.Domain\DevOpsDeploy.Domain.csproj" />
+      <ProjectReference Include="..\DevOpsDeploy.Infrastructure\DevOpsDeploy.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
