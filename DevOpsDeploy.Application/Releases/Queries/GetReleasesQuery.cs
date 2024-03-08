@@ -1,5 +1,5 @@
 using DevOpsDeploy.Domain.Entities;
-using DevOpsDeploy.Infrastructure.Services;
+using DevOpsDeploy.Infrastructure.Interfaces;
 using MediatR;
 using Serilog;
 
@@ -11,16 +11,16 @@ public class GetReleasesQuery : IRequest<List<Release>>
 
     public class Handler : IRequestHandler<GetReleasesQuery, List<Release>>
     {
-        private readonly DeploymentService _deploymentService;
-        private readonly EnvironmentService _environmentService;
-        private readonly ProjectService _projectService;
-        private readonly ReleaseService _releaseService;
+        private readonly IDeploymentService _deploymentService;
+        private readonly IEnvironmentService _environmentService;
+        private readonly IProjectService _projectService;
+        private readonly IReleaseService _releaseService;
 
         public Handler(
-            DeploymentService deploymentService,
-            EnvironmentService environmentService, 
-            ProjectService projectService,
-            ReleaseService releaseService)
+            IDeploymentService deploymentService,
+            IEnvironmentService environmentService, 
+            IProjectService projectService,
+            IReleaseService releaseService)
         {
             _deploymentService = deploymentService;
             _environmentService = environmentService;
@@ -31,7 +31,10 @@ public class GetReleasesQuery : IRequest<List<Release>>
         {
             var environments = _environmentService.GetEnvironments();
             var projects = _projectService.GetProjects();
-        
+
+            if (environments is null) throw new ApplicationException("There are no environments");
+            if (projects is null) throw new ApplicationException("There are no projects");
+
             List<Release> releasesToKeep = [];
         
             foreach (var env in environments)

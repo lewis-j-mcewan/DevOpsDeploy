@@ -16,6 +16,7 @@ public class ReleasesController : ControllerBase
     }
     
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult GetReleases([FromQuery] GetReleasesQuery query)
     {
         var response = _mediator.Send(query).Result;

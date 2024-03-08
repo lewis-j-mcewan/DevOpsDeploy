@@ -17,4 +17,19 @@
       <ProjectReference Include="..\DevOpsDeploy.Application\DevOpsDeploy.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="InputData\Deployments.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="InputData\Environments.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="InputData\Projects.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="InputData\Releases.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
