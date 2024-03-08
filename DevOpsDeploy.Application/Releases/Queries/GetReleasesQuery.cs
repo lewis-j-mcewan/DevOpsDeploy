@@ -1,6 +1,7 @@
 using DevOpsDeploy.Domain.Entities;
 using DevOpsDeploy.Infrastructure.Services;
 using MediatR;
+using Serilog;
 
 namespace DevOpsDeploy.Application.Releases.Queries;
 
@@ -44,24 +45,37 @@ public class GetReleasesQuery : IRequest<List<Release>>
                                 projectReleases.Any(release => release.Id.Equals(deployment.ReleaseId)))
                             .OrderBy(deployment => deployment.DeployedAt)
                             .ToList();
-    
+                    
+                    //one project may have multiple deployments of the same release
                     var distinctProjectDeployments = projectDeployments
                         .GroupBy(deployment => deployment.ReleaseId)
                         .Select(group => group.First())
                         .ToList();
 
                     var projectDeploymentsToKeep = distinctProjectDeployments.Take(request.Keep).ToList();
-        
+
+                    var currentComboReleases = "";
                     foreach (var deploy in projectDeploymentsToKeep)
                     {
                         var release = projectReleases.FirstOrDefault(release => release.Id.Equals(deploy.ReleaseId))!;
                         releasesToKeep.Add(release);
+                        currentComboReleases += release.Id+" | ";
                     }
+                    Log.Information($"{request.Keep} most recent releases of {project.Id} to {env.Id}: {currentComboReleases}");
                 }
             }
-
+            
             var result = releasesToKeep.GroupBy(release => release.Id).Select(group => group.First()).ToList();
+            LogReleasesResult(result);
             return Task.FromResult(result);
         }
+        
+        private static void LogReleasesResult(List<Release> releases)
+        {
+            var output = releases.Aggregate("", (current, release) => current + $"{release.Id} ");
+            Log.Information($"Distinct Releases: {output}");
+        }
     }
+
+    
 }
