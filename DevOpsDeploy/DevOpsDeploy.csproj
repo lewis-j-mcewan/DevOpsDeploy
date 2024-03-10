@@ -18,18 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="InputData\Deployments.json">
+      <Content Update="appsettings.Test.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="InputData\Environments.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="InputData\Projects.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="InputData\Releases.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+      </Content>
     </ItemGroup>
 
 </Project>
