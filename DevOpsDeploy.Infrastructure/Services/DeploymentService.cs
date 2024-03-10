@@ -7,12 +7,10 @@ namespace DevOpsDeploy.Infrastructure.Services;
 public class DeploymentService : IDeploymentService
 {
     private readonly DatabaseSettings _dbSettings;
-    // private InMemoryRepository _inMemoryRepository;
     
     public DeploymentService(IOptions<DatabaseSettings> dbOptions)
     {
         _dbSettings = dbOptions.Value;
-        // _inMemoryRepository = new InMemoryRepository(_dbSettings.ConnectionString);
     }
     public List<Deployment> GetDeploymentsByEnv(string envId)
     {
