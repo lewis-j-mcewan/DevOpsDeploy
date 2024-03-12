@@ -1,4 +1,7 @@
-# Octopus Deploy Coding Challenge
+# DevOps Deploy
+This app has a set of Releases, Environments, Projects and Deployments which are loaded from JSON files. 
+Given a parameter deciding how many releases should be kept to reduce used space, it will return that amount of releases for each project/environment combo and return a distinct set of releases.
+
 ### Assumptions or Questions
 - I went for a Clean Architecture approach with CQRS as I felt it would scale well should the requirement to implement 
   CRUD actions arise.
